@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const input = document.querySelector("input");
+const keyboardInput = new keyControls();
 
 
 ctx.fillStyle = "green";
