@@ -5,7 +5,8 @@ let dt = 0;
 let last = 0;
 const keyboardInput = new keyControls();
 const speed = 64;
-let p1 = 0;
+let p1X = w / 2;
+let p1Y = h / 2;
 
 
 function mainLoop(ms) {
@@ -17,11 +18,12 @@ function mainLoop(ms) {
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, w, h);
   if (keyboardInput.action) {
-    p1 += (speed * dt) * controls.y;
+    p1Y += (speed * dt) * controls.y;
+    p1X += (speed * dt) * controls.x;
   }
   if (p1 > w) p1 -= w + 50;
   ctx.fillStyle = "red";
-  ctx.fillRect(p1, 300, 50, 50);
+  ctx.fillRect(p1X, p1Y, 50, 50);
 }
 
 requestAnimationFrame(mainLoop);
