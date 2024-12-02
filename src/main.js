@@ -1,5 +1,6 @@
-const canvas = document.getElementById("canvas");
+const canvas = document.querySelector("#board canvas");
 const ctx = canvas.getContext("2d");
+const { width: w, height: h } = canvas;
 let dt = 0;
 let last = 0;
 const keyboardInput = new keyControls();
