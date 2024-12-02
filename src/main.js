@@ -20,9 +20,9 @@ function mainLoop(ms) {
   ctx.strokeText(`Total time: ${t.toFixed(2)}`, 70, 90);
 
   p1 += speed * dt;
-if (p1 > w) p1 -= w + 50;
-ctx.fillStyle = "#f00";
-ctx.fillRect(p1, 120, 50, 50);
+  if (p1 > w) p1 -= w + 50;
+  ctx.fillStyle = "#f00";
+  ctx.fillRect(p1, 120, 50, 50);
 }
 
 requestAnimationFrame(mainLoop);
