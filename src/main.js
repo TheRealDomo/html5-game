@@ -18,10 +18,9 @@ function mainLoop(ms) {
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, w, h);
   if (keyboardInput.action) {
-    p1Y += (speed * dt) * controls.y;
-    p1X += (speed * dt) * controls.x;
+    p1Y += (speed * dt) //* controls.y;
+    p1X += (speed * dt) //* controls.x;
   }
-  if (p1 > w) p1 -= w + 50;
   ctx.fillStyle = "red";
   ctx.fillRect(p1X, p1Y, 50, 50);
 }
