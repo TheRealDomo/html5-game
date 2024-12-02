@@ -14,14 +14,14 @@ function mainLoop(ms) {
   dt = t - last;
   last = t;
 
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, w, h);
   ctx.strokeText(`Frame length: ${(dt * 1000).toFixed(2)} ms`, 70, 50);
   ctx.strokeText(`Total time: ${t.toFixed(2)}`, 70, 90);
 
   p1 += speed * dt;
   if (p1 > w) p1 -= w + 50;
-  ctx.fillStyle = "#f00";
+  ctx.fillStyle = "red";
   ctx.fillRect(p1, 120, 50, 50);
 }
 
