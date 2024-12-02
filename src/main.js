@@ -1,18 +1,31 @@
-let randomInteger = Math.floor(Math.random() * 20) + 1;
-let guess;
-let guesses = 0;
+import KeyControls from "../lib/KeyControl.js"
+const canvas = document.querySelector("#board canvas");
+const ctx = canvas.getContext("2d");
+const { width: w, height: h } = canvas;
+let dt = 0;
+let last = 0;
+const keyboardInput = new keyControls();
+const speed = 64;
+let p1X = w / 2;
+let p1Y = h / 2;
 
 
-while (guess != randomInteger) {
-  guess = parseInt(prompt("What number am I thinking of?"), 10);
-  if (guess === randomInteger) {
-    break;
+function mainLoop(ms) {
+  requestAnimationFrame(mainLoop);
+  const t = ms / 1000;
+  dt = t - last;
+  last = t;
+
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, w, h);
+  if (keyboardInput.action) {
+    p1Y += (speed * dt) //* controls.y;
+    p1X += (speed * dt) //* controls.x;
   }
-  guesses++;
-  if (guess < randomInteger) {
-    alert("Higher!")
-  }else{
-    alert("Lower")
-  }
+  ctx.fillStyle = "red";
+  ctx.fillRect(p1X, p1Y, 50, 50);
 }
-alert(`Good Job! You got it in ${guesses} guesses!`)
+
+requestAnimationFrame(mainLoop);
+
+
