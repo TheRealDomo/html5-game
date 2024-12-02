@@ -1,3 +1,5 @@
+import keyControls from "lib/keyboardControls.js"
+
 const canvas = document.querySelector("#board canvas");
 const ctx = canvas.getContext("2d");
 const { width: w, height: h } = canvas;
