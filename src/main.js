@@ -16,14 +16,12 @@ function mainLoop(ms) {
 
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, w, h);
-  ctx.strokeText(`Frame length: ${(dt * 1000).toFixed(2)} ms`, 70, 50);
-  ctx.strokeText(`Total time: ${t.toFixed(2)}`, 70, 90);
   if (keyboardInput.action) {
     p1 += (speed * dt) * controls.y;
   }
   if (p1 > w) p1 -= w + 50;
   ctx.fillStyle = "red";
-  ctx.fillRect(p1, 120, 50, 50);
+  ctx.fillRect(p1, 300, 50, 50);
 }
 
 requestAnimationFrame(mainLoop);
