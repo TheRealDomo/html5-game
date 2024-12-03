@@ -6,18 +6,29 @@
   <link rel="stylesheet" href="res/main.css">
 </head>
 <body>
+  <div id="console"></div>
+<script>
+  const log = (...args) => {
+    document.getElementById('console').innerText += args.join(' ') + '\n';
+  };
+
+  // Capture and display errors
+  window.onerror = (message, source, lineno, colno, error) => {
+    log(`[Error] ${message} at ${source}:${lineno}:${colno}`);
+    if (error && error.stack) log(`[Stack] ${error.stack}`);
+  };
+
+  // Example usage
+  log('Custom logging panel active');
+  throw new Error('Oops! Something went wrong');
+</script>
+
   <div id="board">
     <canvas width="640" height="480"></canvas>
   </div>
     <script src="lib/keyboardControls.js"></script>
   <script type="module" src="src/main.js"></script>
   <div id="console"></div>
-<script>
-  const log = (...args) => {
-    document.getElementById('console').innerText += args.join(' ') + '\n';
-  };
-  log('Custom logging panel active');
-</script>
 </body>
   
 </html>
