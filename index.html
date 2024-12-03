@@ -7,20 +7,41 @@
 </head>
 <body>
   <div id="console"></div>
+<div id="console" style="background: black; color: white; padding: 10px; font-family: monospace;"></div>
 <script>
-  const log = (...args) => {
-    document.getElementById('console').innerText += args.join(' ') + '\n';
+  const consoleDiv = document.getElementById('console');
+  
+  // Function to log messages or errors
+  const log = (type, message) => {
+    const color = type === 'error' ? 'red' : 'lime';
+    consoleDiv.innerHTML += `<div style="color: ${color}">${message}</div>`;
   };
 
-  // Capture and display errors
+  // Catch global errors
   window.onerror = (message, source, lineno, colno, error) => {
-    log(`[Error] ${message} at ${source}:${lineno}:${colno}`);
-    if (error && error.stack) log(`[Stack] ${error.stack}`);
+    const errorDetails = `
+      <b>[Error]</b> ${message}<br>
+      <b>Source:</b> ${source || 'Unknown'}<br>
+      <b>Line:</b> ${lineno}, Column: ${colno}<br>
+      <b>Stack:</b><br>${error && error.stack ? error.stack.replace(/\n/g, '<br>') : 'No stack trace available.'}
+    `;
+    log('error', errorDetails);
   };
 
-  // Example usage
-  log('Custom logging panel active');
-  throw new Error('Oops! Something went wrong');
+  // Example error
+  try {
+    // Simulated error
+    nonexistentFunction();
+  } catch (err) {
+    const caughtErrorDetails = `
+      <b>[Caught Error]</b> ${err.message}<br>
+      <b>Stack:</b><br>${err.stack.replace(/\n/g, '<br>')}
+    `;
+    log('error', caughtErrorDetails);
+  }
+
+  // Normal log
+  log('log', '[Log] The custom logger is working fine!');
 </script>
 
   <div id="board">
