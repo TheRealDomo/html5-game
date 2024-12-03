@@ -6,43 +6,52 @@
   <link rel="stylesheet" href="res/main.css">
 </head>
 <body>
-  <div id="console"></div>
-<div id="console" style="background: black; color: white; padding: 10px; font-family: monospace;"></div>
+ <div id="console" style="background: black; color: white; padding: 10px; font-family: monospace;"></div>
 <script>
-  const consoleDiv = document.getElementById('console');
-  
-  // Function to log messages or errors
-  const log = (type, message) => {
-    const color = type === 'error' ? 'red' : 'lime';
-    consoleDiv.innerHTML += `<div style="color: ${color}">${message}</div>`;
-  };
-
-  // Catch global errors
-  window.onerror = (message, source, lineno, colno, error) => {
+  const logError = (type, message, source, lineno, colno, error) => {
+    const consoleDiv = document.getElementById("console");
     const errorDetails = `
-      <b>[Error]</b> ${message}<br>
-      <b>Source:</b> ${source || 'Unknown'}<br>
-      <b>Line:</b> ${lineno}, Column: ${colno}<br>
-      <b>Stack:</b><br>${error && error.stack ? error.stack.replace(/\n/g, '<br>') : 'No stack trace available.'}
+      <div style="color: red;">
+        <b>[${type}]</b> ${message}<br>
+        <b>Source:</b> ${source || "Unknown"}<br>
+        <b>Line:</b> ${lineno || "N/A"}, Column: ${colno || "N/A"}<br>
+        <b>Stack:</b><br>${error && error.stack ? error.stack.replace(/\n/g, "<br>") : "No stack trace available."}
+      </div>
     `;
-    log('error', errorDetails);
+    consoleDiv.innerHTML += errorDetails;
   };
 
-  // Example error
-  try {
-    // Simulated error
-    nonexistentFunction();
-  } catch (err) {
-    const caughtErrorDetails = `
-      <b>[Caught Error]</b> ${err.message}<br>
-      <b>Stack:</b><br>${err.stack.replace(/\n/g, '<br>')}
-    `;
-    log('error', caughtErrorDetails);
-  }
+  // Global error capture
+  window.onerror = (message, source, lineno, colno, error) => {
+    logError("Global Error", message, source, lineno, colno, error);
+  };
 
-  // Normal log
-  log('log', '[Log] The custom logger is working fine!');
+  // Unhandled Promise rejection capture
+  window.onunhandledrejection = (event) => {
+    logError("Unhandled Promise Rejection", event.reason.message, null, null, null, event.reason);
+  };
+
+  // Test global error
+  setTimeout(() => {
+    nonexistentFunction();
+  }, 1000);
+
+  // Test promise rejection
+  setTimeout(() => {
+    Promise.reject(new Error("Simulated Promise rejection error"));
+  }, 2000);
+
+  // Test caught error
+  setTimeout(() => {
+    try {
+      throw new Error("Caught error in try-catch");
+    } catch (err) {
+      logError("Caught Error", err.message, null, null, null, err);
+    }
+  }, 3000);
 </script>
+
+ 
 
   <div id="board">
     <canvas width="640" height="480"></canvas>
