@@ -11,5 +11,13 @@
   </div>
     <script src="lib/keyboardControls.js"></script>
   <script type="module" src="src/main.js"></script>
+  <div id="console"></div>
+<script>
+  const log = (...args) => {
+    document.getElementById('console').innerText += args.join(' ') + '\n';
+  };
+  log('Custom logging panel active');
+</script>
 </body>
+  
 </html>
